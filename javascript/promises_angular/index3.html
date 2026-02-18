@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html ng-app="testApp">
+<head>
+  <meta charset="UTF-8">
+  <title>Test passaggio dati tra chiamate</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.3/angular.min.js"></script>
+  <script src="main3.js"></script>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 20px; }
+    button { margin: 5px; padding: 8px 16px; cursor: pointer; }
+    #log { margin-top: 20px; background: #f4f4f4; padding: 15px; border-radius: 4px; min-height: 50px; }
+    .success { color: green; }
+    .error   { color: red; }
+    .info    { color: #555; }
+  </style>
+</head>
+<body ng-controller="TestCtrl">
+  <h2>Passaggio dati tra chiamate sequenziali</h2>
+  <p>
+    <strong>API 1</strong> → restituisce utente (id, nome)<br>
+    <strong>API 2</strong> → riceve id utente, restituisce ordine (ordineId, totale)<br>
+    <strong>API 3</strong> → riceve ordineId, restituisce spedizione (tipo, giorni)
+  </p>
+
+  <button ng-click="runChain(0)">Nessun errore</button>
+  <button ng-click="runChain(1)">Errore API 1</button>
+  <button ng-click="runChain(2)">Errore API 2</button>
+  <button ng-click="runChain(3)">Errore API 3</button>
+  <button ng-click="clearLog()">Pulisci log</button>
+
+  <div id="log">
+    <div ng-repeat="entry in logs" ng-class="entry.type">{{ entry.msg }}</div>
+    <em ng-if="logs.length === 0">Premi un bottone per iniziare...</em>
+  </div>
+</body>
+</html>
